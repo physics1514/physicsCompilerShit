@@ -1,7 +1,7 @@
--- Gets the directory of the current script
+-- gets the directory of the current script
 local compilerDir = debug.getinfo(1).source:match("@?(.*/)")
 local compile = dofile(compilerDir .. "compiler.lua")
--- local createExecutable = require("FiOne") -- Used for interpreting the bytecode
+-- local createExecutable = require("FiOne") -- used for interpreting the bytecode
 
 return function(source)
     local executable
@@ -11,7 +11,7 @@ return function(source)
     local ran, failureReason = pcall(function()
         local compiledBytecode = compile(source, name)
         
-        -- Write bytecode to bytecode.txt
+        -- writes bytecode to bytecode.txt
         local file = io.open(compilerDir .. "bytecode.txt", "wb")
         if file then
             file:write(compiledBytecode)
