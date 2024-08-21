@@ -1,2 +1,2 @@
 # physicsCompilerShit
-cumpiles lua code
+### Easily compile lua code
