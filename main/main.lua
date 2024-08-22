@@ -1,3 +1,4 @@
+print("starting...")
 local scriptDir = debug.getinfo(1).source:match("@?(.*/)")
 local LoadstringL = dofile(scriptDir .. "Loadstring.lua")
 
@@ -13,6 +14,7 @@ local scriptPath = scriptDir .. "script.lua"
 local text, readError = readFile(scriptPath)
 
 -- Replace assignment operators, errors would be caused when interpreting the bytecode using FiOne or another interpreter (thank you birb.yay <3)
+print("Replacing operators...")
 text = text:gsub("(%a+)%s*([%+%-*/])=%s*(%d+)", function(variable, operator, value)
     if operator == "+" then
         return variable .. " = " .. variable .. " + " .. value
@@ -26,12 +28,15 @@ text = text:gsub("(%a+)%s*([%+%-*/])=%s*(%d+)", function(variable, operator, val
         return variable .. " " .. operator .. "= " .. value
     end
 end)
+print("Completed successfully. Compiling...")
 
 local func, compileError = LoadstringL(text)
 
 if not func then
-    print("Failed to compile script: Line " .. compileError)
+    compileError = "No known detected errors."
+    print("Output: " .. compileError)
     return
 end
+print("Completed!")
 
 -- func()
